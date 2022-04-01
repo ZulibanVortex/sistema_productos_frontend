@@ -1,0 +1,55 @@
+<body class="animated fadeIn">
+    <div class="sidenav">
+
+        <div class="login-main-text  ">
+            <h1 class="animated fadeIn ">Sitema de Productos </h1>
+        </div>
+        <span>Sistema de productos, es un software desarrollado para facilitar la publicación de productos para que previamente todos nuestros usuarios puedan ubicarlos
+            de una manera rápida, sencilla y dinámica. 
+        </span>
+    </div>
+    <div class="main">
+        <img src="https://image.shutterstock.com/image-photo/industry-40augmented-reality-smart-logistic-600w-515658793.jpg" alt="">
+        <div class=" col-sm-12">
+            <br>
+            <h3 *ngIf="!register; else registerTitle">Iniciar sesión</h3>
+            <ng-template #registerTitle>
+                <h3>Registrate</h3>
+            </ng-template>
+            <div class="login-form">
+                <form class="animated bounceInDown text-center" [formGroup]="signUpForm">
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Correo electrónico</label>
+                        <!--<small class="float-right text-danger" *ngIf="signUpForm.get('email').hasError('required') && signUpForm.get('email').touched">Campo Obligatorio</small>
+                        <i *ngIf="!validPassword && signUpForm.get('email').touched && confirmPassword != ''" class="float-right text-danger fa fa-times"></i>
+                        <i *ngIf="validPassword && signUpForm.get('email').touched && confirmPassword != ''" class="float-right text-info fa fa-check"></i>-->
+                        <input type="email" formControlName="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <small class="float-right text-danger" *ngIf="signUpForm.get('email').hasError('required') && signUpForm.get('email').touched">* Campo Obligatorio</small>
+                        <small class="float-right text-danger" *ngIf="signUpForm.get('email').hasError('email') && signUpForm.get('email').touched">* Formato de correo inválido</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+                        <input autocomplete="off" formControlName="password" type="password" class="form-control" id="exampleInputPassword1">
+                        <small class="float-right text-danger" *ngIf="signUpForm.get('password').hasError('required') && signUpForm.get('password').touched">* Campo Obligatorio</small>
+                    </div>
+                    <div *ngIf="register" class="mb-3">
+                        <label for="exampleInputPassword2" class="form-label">Confirma Contraseña</label>
+                        <input [(ngModel)]="confirmPassword" autocomplete="off" [ngModelOptions]="{standalone: true}" (change)="validatePassword()" id="confirmPassword" type="password" class="form-control" id="exampleInputPassword2">
+                    </div>
+                    <div *ngIf="!register; else textRegister" id="registerHelp" class="form-text">No tienes cuenta? <a href="#" (click)="registerOrLogin(1)">Registrate</a></div>
+                    <ng-template #textRegister>
+                        <div id="loginHelp" class="form-text">Ya tienes cuenta? <a href="" (click)="registerOrLogin(2)">Inicia sesión</a></div>
+                    </ng-template>
+                    <button [disabled]="signUpForm.invalid" (click)="onLogin(signUpForm.value)" *ngIf="!register; else registerButton" type="button" title="Iniciar sesión" class="btn btn-primary">Iniciar sesión
+                      <i class="fas fa-sign-in-alt"></i>
+                    </button>
+                    <ng-template #registerButton>
+                        <button (click)="onCreate(signUpForm.value)" [disabled]="signUpForm.invalid || !validPassword" type="button" title="Iniciar sesión" class="btn btn-primary">Registrarse
+                            <i class="fas fa-user-plus"></i>
+                          </button>
+                    </ng-template>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>

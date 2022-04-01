@@ -1,0 +1,11 @@
+.containerImg {
+    width: 25%;
+    margin: 0 auto;
+}
+.img-product {
+    max-width: 330px;
+    min-width: 110px;
+    max-height: 250px;
+    min-height: 120px;
+    border: 2px rgb(231, 231, 231) solid;
+}

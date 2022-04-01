@@ -1,0 +1,76 @@
+<div class="wrapper d-flex align-items-stretch block">
+    <div id="content">
+        <app-nabvar></app-nabvar>
+        <div class="container" style="margin-top: 5%;">
+            <div class="card">
+                <div class="w-100 d-none d-xl-block">
+                    <!-- wrap every 5 on xl-->
+                </div>
+                <div class="card border-0">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">{{productData.nombre}}</h4>
+                        <div class="col-12">
+                            <div class="containerImg">
+                                <img class="imgProduct" [src]="productData.imagen" [alt]="productData.nombre">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="card-text">
+                            <div *ngIf="cargando" class="row">
+                                <div class="col-sm-12">
+                                    <div class="alert-warning text-center">
+                                        <strong>Cargando</strong>
+                                        <br>
+                                        <div class="spinner"></div>
+                                        <span>Espere por favor</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <br>
+                                <form [formGroup]="firstFormGroup" class="col-12 col-xl-12 col-lg-12">
+                                    <div class="mb-3">
+                                      <label for="exampleInputName" class="form-label">Nombre</label>
+                                      <input type="text" [(ngModel)]="productData.nombre" [ngModelOptions]="{standalone: true}" class="form-control" id="exampleInputName" aria-describedby="nameHelp">
+                                    </div>
+                                    <div class="mb-3">
+                                      <label for="exampleInputPrice" class="form-label">Precio</label>
+                                      <input type="number" min="0" [(ngModel)]="productData.precio" [ngModelOptions]="{standalone: true}" class="form-control" id="exampleInputPrice">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleInputQuantity" class="form-label">Cantidad</label>
+                                        <input type="number" min="0" [(ngModel)]="productData.cantidad" [ngModelOptions]="{standalone: true}" class="form-control" id="exampleInputQuantity">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleInputRemarks" class="form-label">Observaciones</label>
+                                        <input type="text" [(ngModel)]="productData.observaciones" [ngModelOptions]="{standalone: true}" class="form-control" id="exampleInputRemarks">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleInputCities" class="form-label">Ciudades</label>
+                                        <mat-select class="form-control" [ngModel]="preseleccionados" [formControl]="toppings" multiple>
+                                            <mat-select-trigger>
+                                                {{toppings.value ? nameCity(toppings.value[0]) : ''}}
+                                                <span *ngIf="toppings.value?.length > 1" class="example-additional-selection">(+{{toppings.value.length - 1}})
+                                                    <ng-container *ngIf="toppings.value?.length === 2; then singleOther; else pluralOther">
+                                                    </ng-container>
+                                                    <ng-template #singleOther>
+                                                        Otro
+                                                    </ng-template>
+                                                    <ng-template #pluralOther>
+                                                        Otros
+                                                    </ng-template>
+                                                </span>
+                                            </mat-select-trigger>
+                                            <mat-option *ngFor="let city of citiesList" [value]="city.id">{{city.nombre}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                   <button [disabled]="!validateForm()" (click)="onUpdate()" type="submit" class="btn btn-warning">Actualizar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

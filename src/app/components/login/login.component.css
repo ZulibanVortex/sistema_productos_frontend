@@ -1,0 +1,202 @@
+.fab {
+    font-size: 40px;
+    color: white;
+}
+
+.iconCheck {
+    position: relative;
+}
+
+h3 {
+    color: #045282;
+    top: 10px;
+    margin-left: 35%;
+    position: relative;
+}
+
+.btn {
+    width: 70% !important;
+    border-radius: 1rem !important;
+    padding: 1% !important;
+    border: none !important;
+}
+
+.fa {
+    position: absolute;
+    padding: 11px;
+    right: 1px;
+}
+
+.sidenav h1:before {
+    content: " {  ";
+    color: #EA4900;
+}
+
+.sidenav h1:after {
+    content: "                            }";
+    color: #EA4900;
+    animation: changeLetter 3s linear infinite alternate;
+}
+
+h1 {
+    animation-iteration-count: infinite;
+    margin-left: 25%;
+}
+
+.sidenav span {
+    color: white;
+    font-size: 1.3em;
+}
+
+.sidenav span:before {
+    content: " {  ";
+    color: #EA4900;
+}
+
+.sidenav span:after {
+    content: " } ";
+    color: #EA4900;
+}
+
+.main-head {
+    height: 150px;
+    background: #FFF;
+}
+
+.sidenav {
+    height: 100%;
+    background-size: 100%;
+    background-color: #38ADF0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-image: url(https://image.shutterstock.com/image-illustration/social-network-communication-global-computer-600w-122613448.jpg);
+    background-blend-mode: multiply;
+}
+
+.main {
+    padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .login-form {
+        margin-top: 10%;
+    }
+    .register-form {
+        margin-top: 10%;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .main {
+        margin-left: 60%;
+    }
+    .sidenav {
+        width: 58%;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+    }
+    .login-form {
+        margin-top: 10%;
+    }
+    .register-form {
+        margin-top: 0%;
+    }
+}
+
+.login-main-text {
+    margin-top: 0%;
+    padding: 60px;
+    color: #fff;
+}
+
+.login-main-text h2 {
+    font-weight: 300;
+}
+
+.btn-black {
+    background-color: #000 !important;
+    color: #fff;
+}
+
+img {
+    margin-top: 5%;
+    width: 50%;
+    margin-left: 30%;
+}
+
+.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.fast {
+    -webkit-animation-duration: 0.4s;
+    animation-duration: 0.4s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    animation-name: fadeIn;
+}
+
+@keyframes bounceInDown {
+    from,
+    60%,
+    75%,
+    90%,
+    to {
+        -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    0% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -3000px, 0);
+        transform: translate3d(0, -3000px, 0);
+    }
+    60% {
+        opacity: 1;
+        -webkit-transform: translate3d(0, 25px, 0);
+        transform: translate3d(0, 25px, 0);
+    }
+    75% {
+        -webkit-transform: translate3d(0, -10px, 0);
+        transform: translate3d(0, -10px, 0);
+    }
+    90% {
+        -webkit-transform: translate3d(0, 5px, 0);
+        transform: translate3d(0, 5px, 0);
+    }
+    to {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.bounceInDown {
+    -webkit-animation-name: bounceInDown;
+    animation-name: bounceInDown;
+}
+
+p {
+    color: #045282 !important;
+}
