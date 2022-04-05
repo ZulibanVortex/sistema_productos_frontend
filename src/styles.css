@@ -34,3 +34,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   transition: all 0.3s;
   margin-left: 0%;
 }
+.containerImg {
+  width: 25%;
+  margin: 0 auto;
+}
+.img-product {
+  max-width: 330px;
+  min-width: 110px;
+  max-height: 250px;
+  min-height: 120px;
+  border: 2px rgb(231, 231, 231) solid;
+  margin-bottom: 10px;
+}

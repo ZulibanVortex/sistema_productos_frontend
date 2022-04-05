@@ -5,6 +5,7 @@ import {toastme} from 'toastmejs';
 import { UserI } from 'src/app/models/usuario.model';
 import { UsuarioService } from '../../services/usuario.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -53,6 +54,11 @@ export class LoginComponent implements OnInit {
     this.user.password = infoUser.password;
     return this.userService.login(this.user)
       .subscribe((resp: any) => {
+        Swal.fire({
+          title: 'Bienvenido! a nuestro sistema de administración de productos',
+          text: this.user.email,
+          icon: 'success'
+        });
         this.router.navigate(['/dashboard']);
       })
   }

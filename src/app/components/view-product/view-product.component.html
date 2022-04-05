@@ -8,57 +8,49 @@
                 </div>
                 <div class="card border-0">
                     <div class="card-body">
-                        <h4 class="card-title text-center">{{productData.nombre}}</h4>
-                        <div class="col-12">
-                            <div class="containerImg">
-                                <img class="imgProduct" [src]="productData.imagen" [alt]="productData.nombre">
-                            </div>
-                        </div>
-                        <br>
-                        <div class="card-text">
-                            <div *ngIf="cargando" class="row">
-                                <div class="col-sm-12">
-                                    <div class="alert-warning text-center">
-                                        <strong>Cargando</strong>
-                                        <br>
-                                        <div class="spinner"></div>
-                                        <span>Espere por favor</span>
-                                    </div>
+                        <ng-container *ngIf="(loadInfo && loadCitiesProduct); else loading">
+                            <h4 class="card-title text-center">{{productData.nombre}}</h4>
+                            <div class="col-12">
+                                <div class="containerImg">
+                                    <img class="w-100 border-secondary img-product border" [src]="urlImages + 'public/' + productData.imagen" [alt]="productData.nombre">
                                 </div>
                             </div>
-                            <div>
-                                <br>
-                                <form [formGroup]="firstFormGroup" class="col-12 col-xl-12 col-lg-12">
-                                    <div class="mb-3">
-                                      <label for="exampleInputName" class="form-label">Nombre</label>
-                                      <input type="text" disabled [ngModel]="productData.nombre" [ngModelOptions]="{standalone: true}" class="form-control" id="exampleInputName" aria-describedby="nameHelp">
-                                    </div>
-                                    <div class="mb-3">
-                                      <label for="exampleInputPrice" class="form-label">Precio</label>
-                                      <input type="text" disabled [ngModel]="productData.precio | currency" [ngModelOptions]="{standalone: true}" class="form-control" id="exampleInputPrice">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="exampleInputQuantity" class="form-label">Cantidad</label>
-                                        <input type="text" disabled [ngModel]="productData.cantidad" [ngModelOptions]="{standalone: true}" class="form-control" id="exampleInputQuantity">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="exampleInputRemarks" class="form-label">Observaciones</label>
-                                        <input type="text" disabled [ngModel]="productData.observaciones" [ngModelOptions]="{standalone: true}" class="form-control" id="exampleInputRemarks">
-                                    </div>
+                            <br>
+                            <div class="card-text">
+                                <div>
                                     <br>
-                                </form>
-                                <div class="container">
-                                    <agm-map [zoom]="zoom" [latitude]="lat" [longitude]="lng">
-                                        <agm-marker *ngFor="let city of cities" [latitude]="city.latitud" [longitude]="city.longitud">
-                                            <agm-info-window>{{ city.nombre }}</agm-info-window>
-                                        </agm-marker>
-                                        <!-- <agm-marker [latitude]="lat2" [longitude]="lng2">
-                                            <agm-info-window>Medellin</agm-info-window>
-                                        </agm-marker>-->
-                                    </agm-map>                        
+                                    <form [formGroup]="firstFormGroup" class="col-12 col-xl-12 col-lg-12">
+                                        <div class="mb-3">
+                                            <label for="exampleInputName" class="form-label">Nombre</label>
+                                            <input type="text" disabled [ngModel]="productData.nombre" [ngModelOptions]="{standalone: true}" class="form-control" id="exampleInputName" aria-describedby="nameHelp">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleInputPrice" class="form-label">Precio</label>
+                                            <input type="text" disabled [ngModel]="productData.precio | currency" [ngModelOptions]="{standalone: true}" class="form-control" id="exampleInputPrice">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleInputQuantity" class="form-label">Cantidad</label>
+                                            <input type="text" disabled [ngModel]="productData.cantidad" [ngModelOptions]="{standalone: true}" class="form-control" id="exampleInputQuantity">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleInputRemarks" class="form-label">Observaciones</label>
+                                            <input type="text" disabled [ngModel]="productData.observaciones" [ngModelOptions]="{standalone: true}" class="form-control" id="exampleInputRemarks">
+                                        </div>
+                                        <br>
+                                    </form>
+                                    <div class="container">
+                                        <agm-map [zoom]="zoom" [latitude]="lat" [longitude]="lng">
+                                            <agm-marker *ngFor="let city of cities" [latitude]="city.latitud" [longitude]="city.longitud">
+                                                <agm-info-window>{{ city.nombre }}</agm-info-window>
+                                            </agm-marker>
+                                        </agm-map>                        
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </ng-container>
+                        <ng-template #loading>
+                            <app-loading-view></app-loading-view>
+                        </ng-template>
                     </div>
                 </div>
             </div>

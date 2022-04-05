@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { empty } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -10,6 +10,10 @@ import { productSave } from '../models/producto.model';
   providedIn: 'root'
 })
 export class ProductoService {
+
+  headersImages: HttpHeaders =  new HttpHeaders({
+    'Accept': 'application/json',
+  })
 
   constructor(public http: HttpClient) { }
 
@@ -41,5 +45,10 @@ export class ProductoService {
   updateProduct(idProduct: number, product: productSave) {
     const url = URL_SERVICIOS + 'productos/update/' + idProduct;
     return this.http.put(url, product);
+  }
+
+  uploadImage(productId: number, formData: FormData) {
+    const url = URL_SERVICIOS + 'productos/upload/' + productId;
+    return this.http.post(url, formData, { headers: this.headersImages })
   }
 }

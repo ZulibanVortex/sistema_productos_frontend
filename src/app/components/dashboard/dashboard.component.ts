@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit {
   displayedColumns: string[] = ['name', 'price', 'cities', 'actions'];
   productsList: productTable [] = [];
   dataSource: any;
-  cargando: boolean;
+  loadTable: boolean;
   constructor(private productoService: ProductoService) { }
 
   ngOnInit() {
@@ -22,11 +22,11 @@ export class DashboardComponent implements OnInit {
   }
 
   loadProducts() {
-    this.cargando = true;
+    this.loadTable = false;
     this.productoService.loadProducts().toPromise()
       .then((resp: any) => {
-        this.dataSource = new MatTableDataSource(resp.productos)
-        this.cargando = false;
+        this.dataSource = new MatTableDataSource(resp.productos);
+        this.loadTable = true;
       });
   }
   removeProduct(id: number) {

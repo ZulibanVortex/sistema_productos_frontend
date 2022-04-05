@@ -8,63 +8,46 @@
                 </div>
                 <div class="card border-0">
                     <div class="card-body">
-                        <h4 class="card-title text-center">Productos Registrados</h4>
-                        <br>
-                        <div class="card-text">
-                            <div *ngIf="cargando" class="row">
-                                <div class="col-sm-12">
-                                    <div class="alert-warning text-center">
-                                        <strong>Cargando</strong>
-                                        <br>
-                                        <div class="spinner"></div>
-                                        <span>Espere por favor</span>
+                        <ng-container *ngIf="loadTable; else loading">
+                            <h4 class="card-title text-center">Productos Registrados</h4>
+                            <br>
+                            <div class="card-text">
+                                <div>
+                                    <br>
+                                    <div class="tb1 responsive-datable mtn-1">
+                                        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                                            <ng-container matColumnDef="name">
+                                                <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="price">
+                                                <th mat-header-cell *matHeaderCellDef> Precio </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.precio | currency}} </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="cities">
+                                                <th mat-header-cell *matHeaderCellDef> Ciudad(es) </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    <span *ngFor="let item of element.ciudades" class="badge bg-light text-dark">{{item.nombre}}</span>
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="actions">
+                                                <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    <button [routerLink]="['/product-view', element.id]" title="Ver Detalle del producto" type="button" class="btn btn-info"><i class="far fa-eye"></i></button>&nbsp;
+                                                    <button [routerLink]="['/product-edit', element.id]" type="button" class="btn btn-warning" title="Editar Producto"><i class="fas fa-pencil-alt"></i></button>&nbsp;
+                                                    <button (click)="removeProduct(element.id)" type="button" class="btn btn-danger" title="Eliminar producto"><i class="far fa-trash-alt"></i></button>
+                                                </td>
+                                            </ng-container>
+                                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                      </table>
                                     </div>
                                 </div>
                             </div>
-                            <div>
-                                <br>
-                                <div class="tb1 responsive-datable mtn-1">
-                                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-                                        <!--- Note that these columns can be defined in any order.
-                                              The actual rendered columns are set as a property on the row definition" -->
-                                      
-                                        <!-- Position Column -->
-                                        <ng-container matColumnDef="name">
-                                          <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                                          <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
-                                        </ng-container>
-                                      
-                                        <!-- Name Column -->
-                                        <ng-container matColumnDef="price">
-                                          <th mat-header-cell *matHeaderCellDef> Precio </th>
-                                          <td mat-cell *matCellDef="let element"> {{element.precio | currency}} </td>
-                                        </ng-container>
-                                      
-                                        <!-- Weight Column -->
-                                        <ng-container matColumnDef="cities">
-                                          <th mat-header-cell *matHeaderCellDef> Ciudad(es) </th>
-                                          <td mat-cell *matCellDef="let element">
-                                            <span *ngFor="let item of element.ciudades" class="badge bg-light text-dark">{{item.nombre}}</span>
-                                          </td>
-                                        </ng-container>
-                                      
-                                        <!-- Symbol Column -->
-                                        <ng-container matColumnDef="actions">
-                                          <th mat-header-cell *matHeaderCellDef> Acciones </th>
-                                          <td mat-cell *matCellDef="let element">
-                                            <button [routerLink]="['/product-view', element.id]" title="Ver Detalle del producto" type="button" class="btn btn-info"><i class="far fa-eye"></i></button>&nbsp;
-                                            <button [routerLink]="['/product-edit', element.id]" type="button" class="btn btn-warning" title="Editar Producto"><i class="fas fa-pencil-alt"></i></button>&nbsp;
-                                            <button (click)="removeProduct(element.id)" type="button" class="btn btn-danger" title="Eliminar producto"><i class="far fa-trash-alt"></i></button>
-                                        </td>
-                                        </ng-container>
-                                      
-                                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                                      </table>
-                                </div>
-                            </div>
-                        </div>
+                        </ng-container>
+                        <ng-template #loading>
+                            <app-loading-view></app-loading-view>
+                        </ng-template>
                     </div>
                 </div>
             </div>

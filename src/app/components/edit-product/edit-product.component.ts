@@ -8,6 +8,7 @@ import { productSave } from '../../models/producto.model';
 import {toastme} from 'toastmejs'
 import { citySave } from '../../models/ciudad.model';
 import Swal from 'sweetalert2';
+import { URL_SERVICIOS } from 'src/app/config/config';
 
 
 
@@ -18,6 +19,9 @@ import Swal from 'sweetalert2';
 })
 export class EditProductComponent implements OnInit {
   firstFormGroup: FormGroup;
+  imgURL: any;
+  message: String;
+  fileToUpload: File = null;
   productId: number;
   productData: productSave = {
     nombre: null,
@@ -25,11 +29,17 @@ export class EditProductComponent implements OnInit {
     cantidad: null,
     observaciones: null
   }
-  cargando = true;
   toppings = new FormControl();
   citiesList: citiesTable[];
   cities: cityTable[] = [];
   preseleccionados = [];
+  urlImages = URL_SERVICIOS;
+  formData = new FormData();
+  MAXIMO_TAMANIO_BYTES = 10000000;
+  selectedImage = true;
+  loadedCities = false;
+  loadedProduct = false;
+  loadedCitiesProduct = false;
   constructor(private productoService: ProductoService, public activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, public router: Router, private cityService: CityService) { 
     activatedRoute.params.subscribe(params => {
       this.productId = params['productId'];
@@ -45,21 +55,46 @@ export class EditProductComponent implements OnInit {
       await this.getCitiesProduct(this.productId);
     }
   }
+
+  uploadFile(event) {
+    this.fileToUpload = event.target.files[0];
+    if(this.fileToUpload) {
+      this.selectedImage = true;
+      const mimeType = this.fileToUpload.type;
+      if (mimeType.match(/image\/*/) == null) {
+        this.message = 'Sólo se admiten imágenes.';
+        this.selectedImage = false;
+        return;
+      }
+      const reader = new FileReader();
+      reader.readAsDataURL(this.fileToUpload);
+      reader.onload = (event) => {
+        this.imgURL = reader.result;
+      }
+    } else {
+      this.selectedImage = false;
+    }
+  }
   
   validateForm(): boolean {
-    const valid = (this.productData.nombre && this.productData.precio && this.productData.cantidad && this.productData.observaciones) ? true: false;
+    const valid = (this.productData.nombre && this.productData.precio && this.productData.cantidad && this.productData.observaciones && this.selectedImage) ? true: false;
     return valid;
   }
   async loadCities() {
     this.cityService.loadCities().toPromise()
       .then((resp: any) => {
         this.citiesList = resp.ciudades;
+        this.loadedCities = true;
       });
   }
   async loadProductData(id: number) {
     this.productoService.getProduct(id).toPromise()
       .then((resp: any) => {
         this.productData = resp.producto;
+        this.loadedProduct = true; 
+      },
+      error => {
+        this.router.navigate(['/dashboard']);
       });
   }
   async getCitiesProduct(productId: number) {
@@ -69,7 +104,7 @@ export class EditProductComponent implements OnInit {
         for (let i = 0; i < this.cities.length; i++) {
           this.preseleccionados.push(this.cities[i].id_city);
         }
-        this.cargando = false;
+        this.loadedCitiesProduct = true;
       });
   }
 
@@ -77,6 +112,13 @@ export class EditProductComponent implements OnInit {
     if (this.toppings.value.length > 0) {
       this.productoService.updateProduct(this.productId,this.productData).toPromise()
       .then((resp: any) => {
+        if (this.imgURL) {
+          if (this.fileToUpload.size <= this.MAXIMO_TAMANIO_BYTES) {
+            this.uploadImage(this.productId);
+          } else {
+            toastme.error('La imegen a cargar debe tener un tamaño menor a 10MB.');
+          }
+        }
         const igual = this.compareItems(this.toppings.value, this.preseleccionados);
         if(igual == 0) {
           this.cityService.deleteCitiesProduct(this.productId).toPromise()
@@ -90,7 +132,7 @@ export class EditProductComponent implements OnInit {
                   .then((resp: any) => {
                     if(i == this.toppings.value.length - 1) {
                       Swal.fire({
-                        title: 'Producto Actualizad',
+                        title: 'Producto Actualizado',
                         text: this.productData.nombre,
                         icon: 'success'
                       });
@@ -100,6 +142,11 @@ export class EditProductComponent implements OnInit {
               }
             });
         } else {
+          Swal.fire({
+            title: 'Producto Actualizado',
+            text: this.productData.nombre,
+            icon: 'success'
+          });
           this.router.navigate(['/dashboard']);
         }
       })
@@ -107,12 +154,14 @@ export class EditProductComponent implements OnInit {
       toastme.error('Debe seleccionar por lo menos <br> una ciudad para el producto');
     }
   }
+
   nameCity(id: number) {
     if(this.citiesList) {
       return this.citiesList.filter( elem => { return elem.id == id})[0] ? this.citiesList.filter( elem => { return elem.id == id})[0].nombre : '';
 
     }
   }
+
   compareItems(array1: any, array2: any) {
     if (array1.length == array2.length) {
       for (let i = 0; i < array1.length; i++) {
@@ -126,6 +175,14 @@ export class EditProductComponent implements OnInit {
     } else {
       return 0;
     }
+  }
+
+  uploadImage(id: number) {
+    this.formData.append('file', this.fileToUpload);
+    this.productoService.uploadImage(id, this.formData).toPromise()
+      .then((resp: any) => {
+        console.log(resp);
+      });
   }
 
 }

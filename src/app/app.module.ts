@@ -17,6 +17,7 @@ import { CreateProductComponent } from './components/create-product/create-produ
 import { MatSelectModule } from '@angular/material/select';
 import { EditProductComponent } from './components/edit-product/edit-product.component';
 import { NoPageFoundComponent } from './shared/no-page-found/no-page-found.component';
+import { LoadingViewComponent } from './components/loading-view/loading-view.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { NoPageFoundComponent } from './shared/no-page-found/no-page-found.compo
     ViewProductComponent,
     CreateProductComponent,
     EditProductComponent,
-    NoPageFoundComponent
+    NoPageFoundComponent,
+    LoadingViewComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,5 @@
 <div class="topnav" id="myTopnav">
-  <a [routerLink]="['/dashboard']" class="active">Inicio</a>
-  <a [routerLink]="['/create']">Crear</a>
+  <a [routerLink]="['/dashboard']" [routerLinkActive]="['active']">Inicio</a>
+  <a [routerLink]="['/create']" [routerLinkActive]="['active']">Crear</a>
   <a style="cursor: pointer;" (click)="logout()">Cerrar Sesión</a>
 </div>
